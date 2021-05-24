@@ -10,5 +10,8 @@ app.set('view engine', 'pug') //setting the view engine to pug
 app.set('views', 'views') //go to folder called views
 
 app.get('/', (req, res, next) => {
-  res.status(200).render('home')
+  var payload = {
+    pageTitle: 'Home',
+  }
+  res.status(200).render('home', payload)
 })
