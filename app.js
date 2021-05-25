@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const PORT = 3003
+const middleware = require('./middleware')
 
 const server = app.listen(PORT, () =>
   console.log(`server listening on port ${PORT}`)
@@ -9,7 +10,7 @@ const server = app.listen(PORT, () =>
 app.set('view engine', 'pug') //setting the view engine to pug
 app.set('views', 'views') //go to folder called views
 
-app.get('/', (req, res, next) => {
+app.get('/', middleware.requireLogin, (req, res, next) => {
   var payload = {
     pageTitle: 'Home',
   }
