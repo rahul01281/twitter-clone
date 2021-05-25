@@ -6,7 +6,10 @@ app.set('view engine', 'pug') //setting the view engine to pug
 app.set('views', 'views') //go to folder called views
 
 router.get('/', (req, res, next) => {
-  res.status(200).render('login')
+  payload = {
+    title: 'Login',
+  }
+  res.status(200).render('login', payload)
 })
 
 module.exports = router
