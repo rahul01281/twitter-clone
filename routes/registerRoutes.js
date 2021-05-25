@@ -3,6 +3,7 @@ const app = express()
 const router = express.Router()
 const bodyParser = require('body-parser')
 const User = require('../models/UserSchema')
+const bcrypt = require('bcrypt')
 
 app.set('view engine', 'pug') //setting the view engine to pug
 app.set('views', 'views') //go to folder called
@@ -39,6 +40,9 @@ router.post('/', async (req, res, next) => {
     if (user === null) {
       //no user found
       var data = req.body
+
+      data.password = await bcrypt.hash(password, 10)
+
       User.create(data).then((user) => {
         console.log(user)
       })
@@ -51,8 +55,6 @@ router.post('/', async (req, res, next) => {
       }
       res.status(200).render('register', payload)
     }
-
-    console.log('hello')
   } else {
     payload.errorMessage = 'Make sure each field has valid value.'
     res.status(200).render('register', payload)
