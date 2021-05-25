@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const PORT = 3003
 const middleware = require('./middleware')
+const path = require('path')
 
 const server = app.listen(PORT, () =>
   console.log(`server listening on port ${PORT}`)
@@ -9,6 +10,8 @@ const server = app.listen(PORT, () =>
 
 app.set('view engine', 'pug') //setting the view engine to pug
 app.set('views', 'views') //go to folder called views
+
+app.use(express.static(path.join(__dirname, 'public')))
 
 //Routes
 const loginRoute = require('./routes/loginRoutes')
