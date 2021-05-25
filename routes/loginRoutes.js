@@ -11,6 +11,9 @@ app.set('view engine', 'pug') //setting the view engine to pug
 app.set('views', 'views') //go to folder called views
 
 router.get('/', (req, res, next) => {
+  if (req.session && req.session.user) {
+    return res.redirect('/')
+  }
   payload = {
     title: 'Login',
   }

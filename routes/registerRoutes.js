@@ -11,6 +11,9 @@ app.set('views', 'views') //go to folder called
 app.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/', (req, res, next) => {
+  if (req.session && req.session.user) {
+    return res.redirect('/')
+  }
   payload = {
     title: 'Register',
   }
