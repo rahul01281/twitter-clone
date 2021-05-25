@@ -10,6 +10,11 @@ const server = app.listen(PORT, () =>
 app.set('view engine', 'pug') //setting the view engine to pug
 app.set('views', 'views') //go to folder called views
 
+//Routes
+const loginRoute = require('./routes/loginRoutes')
+
+app.use('/login', loginRoute)
+
 app.get('/', middleware.requireLogin, (req, res, next) => {
   var payload = {
     pageTitle: 'Home',
