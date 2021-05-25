@@ -4,6 +4,7 @@ const PORT = 3003
 const middleware = require('./middleware')
 const path = require('path')
 const bodyParser = require('body-parser')
+const database = require('./database')
 
 const server = app.listen(PORT, () =>
   console.log(`server listening on port ${PORT}`)
