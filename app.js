@@ -5,6 +5,7 @@ const middleware = require('./middleware')
 const path = require('path')
 const bodyParser = require('body-parser')
 const database = require('./database')
+const session = require('express-session')
 
 const server = app.listen(PORT, () =>
   console.log(`server listening on port ${PORT}`)
@@ -15,6 +16,14 @@ app.set('views', 'views') //go to folder called views
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(
+  session({
+    secret: 'secret', //hash the session
+    resave: true,
+    saveUninitialized: false,
+  })
+)
 
 //Routes
 const loginRoute = require('./routes/loginRoutes')
