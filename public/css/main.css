@@ -6,6 +6,7 @@
   --blueLight: #9bd1f9;
   --greyText: rgb(101, 119, 134);
   --greyButton: rgba(0, 0, 0, 0.34);
+  --red: rgb(226, 34, 94);
 }
 
 * {
@@ -185,4 +186,8 @@ nav a.blue {
   background-color: #d4edff;
   color: var(--blue);
   border-radius: 50%;
+}
+
+.postButtonContainer.red button.active {
+  color: var(--red);
 }
