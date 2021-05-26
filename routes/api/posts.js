@@ -51,7 +51,14 @@ router.put('/:id/like', async (req, res, next) => {
   var option = isLiked ? '$pull' : '$addToSet'
 
   //insert user like
-  await User.findByIdAndUpdate(userId, { [option]: { likes: postId } })
+  req.session.user = await User.findByIdAndUpdate(
+    userId,
+    { [option]: { likes: postId } },
+    { new: true }
+  ).catch((error) => {
+    console.log(error)
+    res.sendStatus(400)
+  }) //new:true will make sure that findByIdAndUpdate will update the value and give back the newly updated document
 
   //insert post like
 
