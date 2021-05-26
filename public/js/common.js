@@ -41,7 +41,16 @@ $('#submitPostButton').click((e) => {
 $(document).on('click', '.likeButton', (e) => {
   var button = $(e.target)
   var postId = getPostIdFromElement(button)
-  console.log(postId)
+
+  if (postId === undefined) return
+
+  $.ajax({
+    url: '/api/posts',
+    type: 'PUT',
+    success: (postData) => {
+      console.log(postData)
+    },
+  })
 })
 
 function getPostIdFromElement(element) {
