@@ -1,3 +1,4 @@
+//handling the post textarea and submit button
 $('#postTextarea').keyup((e) => {
   var textbox = $(e.target)
   var value = textbox.val().trim() //getting entered text in textbox
@@ -12,4 +13,17 @@ $('#postTextarea').keyup((e) => {
   }
 
   submitButton.prop('disabled', false)
+})
+
+$('#submitPostButton').click((e) => {
+  var button = $(e.target)
+  var textbox = $('#postTextarea')
+
+  var data = {
+    content: textbox.val(),
+  }
+
+  $.post('/api/post', data, (postData, status, xhr) => {
+    //the function which is called when the request to the url has returned
+  })
 })
