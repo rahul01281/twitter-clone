@@ -61,8 +61,16 @@ router.put('/:id/like', async (req, res, next) => {
   }) //new:true will make sure that findByIdAndUpdate will update the value and give back the newly updated document
 
   //insert post like
+  var post = await Post.findByIdAndUpdate(
+    postId,
+    { [option]: { likes: userId } },
+    { new: true }
+  ).catch((error) => {
+    console.log(error)
+    res.sendStatus(400)
+  })
 
-  res.status(200).send('hello')
+  res.status(200).send(post)
 })
 
 module.exports = router
