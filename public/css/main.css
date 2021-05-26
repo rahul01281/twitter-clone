@@ -6,6 +6,10 @@
   --blueLight: #9bd1f9;
 }
 
+* {
+  outline: none !important;
+}
+
 h1 {
   font-size: 19px;
   font-weight: 800;
