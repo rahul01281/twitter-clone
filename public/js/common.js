@@ -25,6 +25,13 @@ $('#submitPostButton').click((e) => {
 
   $.post('/api/posts', data, (postData, status, xhr) => {
     //the function which is called when the request to the url has returned
-    console.log(postData)
+    var html = createPostHtml(postData)
+    $('.postsContainer').prepend(html) //display the post
+    textbox.val('')
+    button.prop('disabled', true)
   })
 })
+
+function createPostHtml(postData) {
+  return postData.content
+}
