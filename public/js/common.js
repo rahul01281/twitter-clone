@@ -32,6 +32,16 @@ $('#submitPostButton').click((e) => {
   })
 })
 
+//this will not work because the buttons are dynamic content and when this executes we don't have our buttons
+// $('.likeButton').click((e) => {
+//   console.log('button clicked')
+// })
+
+//what it does is attach the click event to the document itself so now the whole page will listen for clicks on the ".likeButton" elemment and then execute it
+$(document).on('click', '.likeButton', (e) => {
+  console.log('button clicked')
+})
+
 function timeDifference(current, previous) {
   var msPerMinute = 60 * 1000
   var msPerHour = msPerMinute * 60
@@ -91,7 +101,7 @@ function createPostHtml(postData) {
                             <button><i class='fas fa-retweet'></i></button>
                         </div>
                         <div class='postButtonContainer'>
-                            <button><i class='far fa-heart'></i></button>
+                            <button class='likeButton'><i class='far fa-heart'></i></button>
                         </div>
                     </div>
                 </div>
