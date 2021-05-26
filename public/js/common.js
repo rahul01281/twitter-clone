@@ -43,7 +43,7 @@ function timeDifference(current, previous) {
 
   if (elapsed < msPerMinute) {
     if (elapsed / 1000 < 30) {
-      return 'Just mow'
+      return 'Just now'
     }
     return Math.round(elapsed / 1000) + ' seconds ago'
   } else if (elapsed < msPerHour) {
