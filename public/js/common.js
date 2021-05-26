@@ -37,10 +37,23 @@ $('#submitPostButton').click((e) => {
 //   console.log('button clicked')
 // })
 
-//what it does is attach the click event to the document itself so now the whole page will listen for clicks on the ".likeButton" elemment and then execute it
+//what it does is attach the click event to the document itself so now the whole page will listen for clicks on the ".likeButton" element and then execute it
 $(document).on('click', '.likeButton', (e) => {
-  console.log('button clicked')
+  var button = $(e.target)
+  var postId = getPostIdFromElement(button)
+  console.log(postId)
 })
+
+function getPostIdFromElement(element) {
+  var isRoot = element.hasClass('post')
+  var rootElement = isRoot ? element : element.closest('.post')
+  var postId = rootElement.data().id
+
+  if (postId === undefined) {
+    return alert('post id undefined')
+  }
+  return postId
+}
 
 function timeDifference(current, previous) {
   var msPerMinute = 60 * 1000
@@ -79,7 +92,7 @@ function createPostHtml(postData) {
   var displayName = postedBy.firstName + ' ' + postedBy.lastName
   var timestamp = timeDifference(new Date(), new Date(postData.createdAt))
 
-  return `<div class='post'>
+  return `<div class='post' data-id='${postData._id}'>
             <div class='mainContentContainer'>
                 <div class='userImageContainer'>
                     <img src='${postedBy.profilePic}'>
