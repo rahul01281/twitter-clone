@@ -7,9 +7,16 @@ const Post = require('../../models/PostSchema')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
-router.get('/', async (req, res, next) => {})
+router.get('/', (req, res, next) => {
+  Post.find()
+    .then((posts) => res.status(200).send(posts))
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(400)
+    })
+})
 
-router.post('/', async (req, res, next) => {
+router.post('/', (req, res, next) => {
   if (!req.body.content) {
     console.log('content param not sent with request')
     return res.sendStatus(400)
