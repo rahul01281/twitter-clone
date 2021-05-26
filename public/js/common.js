@@ -23,7 +23,8 @@ $('#submitPostButton').click((e) => {
     content: textbox.val(),
   }
 
-  $.post('/api/post', data, (postData, status, xhr) => {
+  $.post('/api/posts', data, (postData, status, xhr) => {
     //the function which is called when the request to the url has returned
+    console.log(postData)
   })
 })
