@@ -172,7 +172,7 @@ function createPostHtml(postData) {
                     </div>
                     <div class='postFooter'>
                         <div class='postButtonContainer'>
-                            <button><i class='far fa-comment'></i></button>
+                            <button data-toggle='modal' data-target='#replyModal'><i class='far fa-comment'></i></button>
                         </div>
                         <div class='postButtonContainer green'>
                             <button class='retweetButton ${retweetButtonActiveClass}'><i class='fas fa-retweet'></i><span>${
