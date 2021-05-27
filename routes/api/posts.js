@@ -12,7 +12,10 @@ router.get('/', (req, res, next) => {
     .populate('postedBy')
     .populate('retweetData')
     .sort({ createdAt: -1 })
-    .then((posts) => res.status(200).send(posts))
+    .then(async (posts) => {
+      posts = await User.populate(posts, { path: 'retweetData.postedBy' })
+      res.status(200).send(posts)
+    })
     .catch((error) => {
       console.log(error)
       res.sendStatus(400)
