@@ -54,6 +54,41 @@ router.put('/:id/like', async (req, res, next) => {
   req.session.user = await User.findByIdAndUpdate(
     userId,
     { [option]: { likes: postId } },
+    { new: true } //new:true will make sure that findByIdAndUpdate will update the value and give back the newly updated document
+  ).catch((error) => {
+    console.log(error)
+    res.sendStatus(400)
+  })
+
+  //insert post like
+  var post = await Post.findByIdAndUpdate(
+    postId,
+    { [option]: { likes: userId } },
+    { new: true }
+  ).catch((error) => {
+    console.log(error)
+    res.sendStatus(400)
+  })
+
+  res.status(200).send(post)
+})
+
+router.post('/:id/retweet', async (req, res, next) => {
+  return res.status(200).send(req.params.id)
+
+  var postId = req.params.id
+  var userId = req.session.user._id
+
+  //checking if user has already liked the post
+  var isLiked =
+    req.session.user.likes && req.session.user.likes.includes(postId)
+
+  var option = isLiked ? '$pull' : '$addToSet'
+
+  //insert user like
+  req.session.user = await User.findByIdAndUpdate(
+    userId,
+    { [option]: { likes: postId } },
     { new: true }
   ).catch((error) => {
     console.log(error)
