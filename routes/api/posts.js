@@ -88,22 +88,34 @@ router.post('/:id/retweet', async (req, res, next) => {
 
   var option = deletedPost != null ? '$pull' : '$addToSet'
 
-  return res.status(200).send(option)
+  var repost = deletedPost
 
-  //insert user like
+  if (repost === null) {
+    //create the retweet
+    repost = await Post.create({ postedBy: userId, retweetData: postId }).catch(
+      (error) => {
+        console.log(error)
+        res.sendStatus(400)
+      }
+    )
+  }
+
+  //the repost will either contain the post we want to add to user's list of retweets or contain the retweet we want to remove
+
+  //update user retweet
   req.session.user = await User.findByIdAndUpdate(
     userId,
-    { [option]: { likes: postId } },
+    { [option]: { retweets: repost._id } },
     { new: true }
   ).catch((error) => {
     console.log(error)
     res.sendStatus(400)
   }) //new:true will make sure that findByIdAndUpdate will update the value and give back the newly updated document
 
-  //insert post like
+  //update post retweet
   var post = await Post.findByIdAndUpdate(
     postId,
-    { [option]: { likes: userId } },
+    { [option]: { retweetUsers: userId } },
     { new: true }
   ).catch((error) => {
     console.log(error)
