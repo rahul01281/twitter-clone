@@ -119,6 +119,14 @@ function timeDifference(current, previous) {
 }
 
 function createPostHtml(postData) {
+  if (postData === null) return alert('post object is null')
+
+  var isRetweet = postData.retweetData !== undefined
+  var retweetedBy = isRetweet ? postData.postedBy.username : null
+  postData = isRetweet ? postData.retweetData : postData
+
+  console.log(isRetweet)
+
   var postedBy = postData.postedBy
 
   if (postedBy._id === undefined) {
@@ -129,6 +137,12 @@ function createPostHtml(postData) {
   var timestamp = timeDifference(new Date(), new Date(postData.createdAt))
 
   var likedButtonActiveClass = postData.likes.includes(userLoggedIn._id)
+    ? 'active'
+    : ''
+
+  var retweetButtonActiveClass = postData.retweetUsers.includes(
+    userLoggedIn._id
+  )
     ? 'active'
     : ''
 
@@ -153,9 +167,9 @@ function createPostHtml(postData) {
                             <button><i class='far fa-comment'></i></button>
                         </div>
                         <div class='postButtonContainer green'>
-                            <button class='retweetButton'><i class='fas fa-retweet'></i><span>${
-                              postData.retweetUsers.length || ''
-                            }</span></button>
+                            <button class='retweetButton ${retweetButtonActiveClass}'><i class='fas fa-retweet'></i><span>${
+    postData.retweetUsers.length || ''
+  }</span></button>
                         </div>
                         <div class='postButtonContainer red'>
                             <button class='likeButton ${likedButtonActiveClass}'><i class='far fa-heart'></i><span>${

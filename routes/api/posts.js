@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 router.get('/', (req, res, next) => {
   Post.find()
     .populate('postedBy')
+    .populate('retweetData')
     .sort({ createdAt: -1 })
     .then((posts) => res.status(200).send(posts))
     .catch((error) => {
