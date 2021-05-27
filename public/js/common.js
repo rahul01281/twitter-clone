@@ -43,6 +43,10 @@ $('#replyModal').on('show.bs.modal', (e) => {
   })
 })
 
+$('#replyModal').on('hidden.bs.modal', (e) => {
+  $('#originalPostContainer').html('')
+})
+
 //this will not work because the buttons are dynamic content and when this executes we don't have our buttons
 // $('.likeButton').click((e) => {
 //   console.log('button clicked')
