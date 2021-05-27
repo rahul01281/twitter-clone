@@ -74,16 +74,21 @@ router.put('/:id/like', async (req, res, next) => {
 })
 
 router.post('/:id/retweet', async (req, res, next) => {
-  return res.status(200).send(req.params.id)
-
   var postId = req.params.id
   var userId = req.session.user._id
 
-  //checking if user has already liked the post
-  var isLiked =
-    req.session.user.likes && req.session.user.likes.includes(postId)
+  //try and delete retweet => this means if we can delete it, it means we have unretweeted the tweet, if we can't delete it then it never existed and so we can just retweet it
+  var deletedPost = await Post.findOneAndDelete({
+    postedBy: userId,
+    retweetData: postId,
+  }).catch((error) => {
+    console.log(error)
+    res.sendStatus(400)
+  })
 
-  var option = isLiked ? '$pull' : '$addToSet'
+  var option = deletedPost != null ? '$pull' : '$addToSet'
+
+  return res.status(200).send(option)
 
   //insert user like
   req.session.user = await User.findByIdAndUpdate(
