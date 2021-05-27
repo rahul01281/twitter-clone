@@ -34,6 +34,16 @@ $('#submitPostButton').click((e) => {
   })
 })
 
+$('#replyModal').on('show.bs.modal', (e) => {
+  var button = $(e.relatedTarget)
+  var postId = getPostIdFromElement(button)
+
+  $.get(`/api/posts/${postId}`, (post, status, xhr) => {
+    // outputPosts(post, $('.postsContainer'))
+    console.log(post)
+  })
+})
+
 //this will not work because the buttons are dynamic content and when this executes we don't have our buttons
 // $('.likeButton').click((e) => {
 //   console.log('button clicked')
@@ -126,8 +136,6 @@ function createPostHtml(postData) {
   var isRetweet = postData.retweetData !== undefined
   var retweetedBy = isRetweet ? postData.postedBy.username : null
   postData = isRetweet ? postData.retweetData : postData
-
-  console.log(isRetweet)
 
   var postedBy = postData.postedBy
 
