@@ -1,9 +1,11 @@
 //handling the post textarea and submit button
-$('#postTextarea').keyup((e) => {
+$('#postTextarea, #replyTextarea').keyup((e) => {
   var textbox = $(e.target)
   var value = textbox.val().trim() //getting entered text in textbox
 
-  var submitButton = $('#submitPostButton')
+  var isModal = textbox.parents('.modal').length === 1
+
+  var submitButton = isModal ? $('#submitReplyButton') : $('#submitPostButton')
 
   if (submitButton.length === 0) return alert('no submit button found')
 
