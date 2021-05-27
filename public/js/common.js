@@ -39,8 +39,7 @@ $('#replyModal').on('show.bs.modal', (e) => {
   var postId = getPostIdFromElement(button)
 
   $.get(`/api/posts/${postId}`, (post, status, xhr) => {
-    // outputPosts(post, $('.postsContainer'))
-    console.log(post)
+    outputPosts(post, $('#originalPostContainer'))
   })
 })
 
@@ -101,6 +100,23 @@ function getPostIdFromElement(element) {
     return alert('post id undefined')
   }
   return postId
+}
+
+function outputPosts(posts, container) {
+  container.html('')
+
+  if (!Array.isArray(posts)) {
+    posts = [posts]
+  }
+
+  posts.forEach((post) => {
+    var html = createPostHtml(post)
+    container.append(html)
+  })
+
+  if (posts.length === 0) {
+    container.append("<span class='noResults'>Nothing to show :(</span>")
+  }
 }
 
 function timeDifference(current, previous) {
