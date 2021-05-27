@@ -21,9 +21,15 @@ router.get('/', async (req, res, next) => {
   //     res.sendStatus(400)
   //   })
 
-  var posts = await getPosts()
+  var posts = await getPosts({})
 
   return res.status(200).send(posts)
+})
+
+router.get('/:id', async (req, res, next) => {
+  var postId = req.params.id
+  var post = await getPosts({ _id: postId })
+  res.status(200).send(post[0])
 })
 
 router.post('/', (req, res, next) => {
@@ -133,8 +139,8 @@ router.post('/:id/retweet', async (req, res, next) => {
   res.status(200).send(post)
 })
 
-async function getPosts() {
-  var posts = await Post.find()
+async function getPosts(filter) {
+  var posts = await Post.find(filter)
     .populate('postedBy')
     .populate('retweetData')
     .sort({ createdAt: -1 })
