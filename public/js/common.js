@@ -179,7 +179,7 @@ function timeDifference(current, previous) {
   }
 }
 
-function createPostHtml(postData) {
+function createPostHtml(postData, largeFont = false) {
   if (postData === null) return alert('post object is null')
 
   var isRetweet = postData.retweetData !== undefined
@@ -205,6 +205,8 @@ function createPostHtml(postData) {
     ? 'active'
     : ''
 
+  var largeFontClass = largeFont ? 'largeFont' : ''
+
   var retweetText = ''
   if (isRetweet) {
     retweetText = `<span><i class='fas fa-retweet'></i>  Retweeted by <a href='/profile/${retweetedBy}'>@${retweetedBy}</a></span>`
@@ -224,7 +226,7 @@ function createPostHtml(postData) {
                 </div>`
   }
 
-  return `<div class='post' data-id='${postData._id}'>
+  return `<div class='post ${largeFontClass}' data-id='${postData._id}'>
             <div class='postActionContainer'>
               ${retweetText}
             </div>
@@ -272,7 +274,7 @@ function outputPostsWithReplies(posts, container) {
     container.append(html)
   }
 
-  var mainPostHtml = createPostHtml(posts.postData)
+  var mainPostHtml = createPostHtml(posts.postData, true)
   container.append(mainPostHtml)
 
   posts.replies.forEach((post) => {
