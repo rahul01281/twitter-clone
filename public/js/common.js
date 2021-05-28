@@ -38,10 +38,15 @@ $('#submitPostButton, #submitReplyButton').click((e) => {
 
   $.post('/api/posts', data, (postData, status, xhr) => {
     //the function which is called when the request to the url has returned
-    var html = createPostHtml(postData)
-    $('.postsContainer').prepend(html) //display the post
-    textbox.val('')
-    button.prop('disabled', true)
+
+    if (postData.replyTo) {
+      location.reload()
+    } else {
+      var html = createPostHtml(postData)
+      $('.postsContainer').prepend(html) //display the post
+      textbox.val('')
+      button.prop('disabled', true)
+    }
   })
 })
 

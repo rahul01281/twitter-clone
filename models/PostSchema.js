@@ -11,6 +11,7 @@ const PostSchema = new Schema(
     retweetUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     // when we make a retweet, we will make a new post in the dashboard. if any post has the retweetData field, that means it is a retweet and then we will go and get the data and show the post
     retweetData: { type: Schema.Types.ObjectId, ref: 'Post' },
+    replyTo: { type: Schema.Types.ObjectId, ref: 'Post' },
   },
   { timestamps: true }
 )
