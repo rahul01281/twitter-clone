@@ -70,10 +70,18 @@ $('#deletePostModal').on('show.bs.modal', (e) => {
   //set data-id of the button to postId
   $('#deletePostButton').data('id', postId)
   // $('#submitReplyButton').attr("data-id", postId)
+})
 
-  // $.get(`/api/posts/${postId}`, (post, status, xhr) => {
-  //   outputPosts(post.postData, $('#originalPostContainer'))
-  // })
+$('#deletePostButton').click((e) => {
+  var postId = $(e.target).data('id')
+
+  $.ajax({
+    url: `/api/posts/${postId}`,
+    type: 'DELETE',
+    success: (postData) => {
+      location.reload()
+    },
+  })
 })
 
 $('#replyModal').on('hidden.bs.modal', (e) => {
