@@ -78,7 +78,10 @@ $('#deletePostButton').click((e) => {
   $.ajax({
     url: `/api/posts/${postId}`,
     type: 'DELETE',
-    success: (postData) => {
+    success: (data, status, xhr) => {
+      if (xhr.status != 202) {
+        return alert('could not delete')
+      }
       location.reload()
     },
   })
