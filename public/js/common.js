@@ -201,6 +201,20 @@ function createPostHtml(postData) {
     retweetText = `<span><i class='fas fa-retweet'></i>  Retweeted by <a href='/profile/${retweetedBy}'>@${retweetedBy}</a></span>`
   }
 
+  var replyFlag = ''
+  if (postData.replyTo) {
+    if (!postData.replyTo._id) {
+      return alert('reply to is not populated')
+    } else if (!postData.replyTo.postedBy._id) {
+      return alert('posted by is not populated')
+    }
+
+    var replyToUsername = postData.replyTo.postedBy.username
+    replyFlag = `<div class='replyFlag'>
+                  Replying to <a href='/profile/${replyToUsername}'>@${replyToUsername}</a>
+                </div>`
+  }
+
   return `<div class='post' data-id='${postData._id}'>
             <div class='postActionContainer'>
               ${retweetText}
@@ -217,6 +231,7 @@ function createPostHtml(postData) {
                         <span class='username'>@${postedBy.username}</span>
                         <span class='date'>${timestamp}</span>
                     </div>
+                    ${replyFlag}
                     <div class='postBody'>
                         <span>${postData.content}</span>
                     </div>
