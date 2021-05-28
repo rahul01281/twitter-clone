@@ -37,7 +37,7 @@ const postsApiRoutes = require('./routes/api/posts')
 app.use('/login', loginRoute)
 app.use('/register', registerRoute)
 app.use('/logout', logoutRoute)
-app.use('/post', postRoutes)
+app.use('/post', middleware.requireLogin, postRoutes)
 
 app.use('/api/posts', postsApiRoutes)
 

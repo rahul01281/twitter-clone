@@ -59,7 +59,7 @@ $('#replyModal').on('show.bs.modal', (e) => {
   // $('#submitReplyButton').attr("data-id", postId)
 
   $.get(`/api/posts/${postId}`, (post, status, xhr) => {
-    outputPosts(post, $('#originalPostContainer'))
+    outputPosts(post.postData, $('#originalPostContainer'))
   })
 })
 
@@ -262,4 +262,21 @@ function createPostHtml(postData) {
                 </div>
             </div>
           </div>`
+}
+
+function outputPostsWithReplies(posts, container) {
+  container.html('')
+
+  if (posts.replyTo !== undefined && posts.replyTo._id !== undefined) {
+    var html = createPostHtml(posts.replyTo)
+    container.append(html)
+  }
+
+  var mainPostHtml = createPostHtml(posts.postData)
+  container.append(mainPostHtml)
+
+  posts.replies.forEach((post) => {
+    var html = createPostHtml(post)
+    container.append(html)
+  })
 }

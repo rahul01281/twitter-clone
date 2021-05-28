@@ -28,8 +28,21 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   var postId = req.params.id
-  var post = await getPosts({ _id: postId })
-  res.status(200).send(post[0])
+  var postData = await getPosts({ _id: postId })
+  postData = postData[0]
+
+  var post = {
+    postData: postData,
+  }
+
+  if (postData.replyTo !== undefined) {
+    post.replyTo = postData.replyTo
+  }
+
+  //get all the posts who are the reply to the post we click on
+  post.replies = await getPosts({ replyTo: postId })
+
+  res.status(200).send(post)
 })
 
 router.post('/', (req, res, next) => {
