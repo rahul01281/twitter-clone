@@ -33,6 +33,11 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
+  if (req.body.replyTo) {
+    console.log(req.body.replyTo)
+    return res.sendStatus(400)
+  }
+
   if (!req.body.content) {
     console.log('content param not sent with request')
     return res.sendStatus(400)
