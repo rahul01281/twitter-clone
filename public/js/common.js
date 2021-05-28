@@ -211,7 +211,7 @@ function createPostHtml(postData) {
   }
 
   var replyFlag = ''
-  if (postData.replyTo) {
+  if (postData.replyTo && postData.replyTo._id) {
     if (!postData.replyTo._id) {
       return alert('reply to is not populated')
     } else if (!postData.replyTo.postedBy._id) {
