@@ -63,6 +63,19 @@ $('#replyModal').on('show.bs.modal', (e) => {
   })
 })
 
+$('#deletePostModal').on('show.bs.modal', (e) => {
+  var button = $(e.relatedTarget)
+  var postId = getPostIdFromElement(button)
+
+  //set data-id of the button to postId
+  $('#deletePostButton').data('id', postId)
+  // $('#submitReplyButton').attr("data-id", postId)
+
+  // $.get(`/api/posts/${postId}`, (post, status, xhr) => {
+  //   outputPosts(post.postData, $('#originalPostContainer'))
+  // })
+})
+
 $('#replyModal').on('hidden.bs.modal', (e) => {
   $('#originalPostContainer').html('')
 })
