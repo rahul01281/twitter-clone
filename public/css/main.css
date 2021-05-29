@@ -251,3 +251,21 @@ nav a.blue {
 .errorMessage {
   padding: var(--spacing);
 }
+
+.profileHeaderContainer .coverPhotoContainer {
+  height: 180px;
+  background-color: var(--blue);
+  position: relative;
+}
+
+.profileHeaderContainer .userImageContainer {
+  width: 132px;
+  height: 132px;
+  margin-left: var(--spacing);
+  position: absolute;
+  bottom: -66px;
+}
+
+.profileHeaderContainer .userImageContainer img {
+  border: 4px solid white;
+}
