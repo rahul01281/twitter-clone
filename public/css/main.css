@@ -247,3 +247,7 @@ nav a.blue {
 .postContentContainer .header .date {
   flex: 1;
 }
+
+.errorMessage {
+  padding: var(--spacing);
+}
