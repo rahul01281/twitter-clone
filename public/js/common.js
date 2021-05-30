@@ -161,12 +161,21 @@ $(document).on('click', '.followButton', (e) => {
         return
       }
 
+      var difference = 1
       if (data.following && data.following.includes(userId)) {
         button.addClass('following')
         button.text('Following')
       } else {
         button.removeClass('following')
         button.text('Follow')
+        difference = -1
+      }
+
+      var followesLabel = $('#followersValue')
+      if (followesLabel.length != 0) {
+        var followersText = followesLabel.text()
+        followersText = parseInt(followersText)
+        followesLabel.text(followersText + difference)
       }
     },
   })
