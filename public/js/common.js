@@ -151,7 +151,21 @@ $(document).on('click', '.post', (e) => {
 $(document).on('click', '.followButton', (e) => {
   var button = $(e.target)
   var userId = button.data().user
-  console.log(userId)
+
+  $.ajax({
+    url: `/api/users/${userId}/follow`,
+    type: 'PUT',
+    success: (data) => {
+      // button.find('span').text(postData.likes.length || '')
+
+      // if (postData.likes.includes(userLoggedIn._id)) {
+      //   button.addClass('active')
+      // } else {
+      //   button.removeClass('active')
+      // }
+      console.log(data)
+    },
+  })
 })
 
 function getPostIdFromElement(element) {
