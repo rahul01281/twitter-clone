@@ -4,6 +4,8 @@ block content
     if !profileUser
         span.errorMessage Check the username you're trying to see
     else 
+        script.
+            var profileUserId = "!{profileUser._id}"
         .profileHeaderContainer 
             .coverPhotoContainer 
 
