@@ -3,7 +3,12 @@ $(document).ready(() => {
 })
 
 function loadPosts() {
-  $.get('/api/posts', { postedBy: profileUserId }, (posts, status, xhr) => {
-    outputPosts(posts, $('.postsContainer'))
-  })
+  //get only the posts by the users not replies
+  $.get(
+    '/api/posts',
+    { postedBy: profileUserId, isReply: false },
+    (posts, status, xhr) => {
+      outputPosts(posts, $('.postsContainer'))
+    }
+  )
 }

@@ -21,7 +21,16 @@ router.get('/', async (req, res, next) => {
   //     res.sendStatus(400)
   //   })
 
-  var posts = await getPosts({})
+  var searchObject = req.query
+
+  //means isReply field exists
+  if (searchObject.isReply !== undefined) {
+    var isReply = searchObject.isReply == 'true'
+    searchObject.replyTo = { $exists: isReply } // filter based on replyTo field. if isReply exists, then it will return that document
+    delete searchObject.isReply //remove the isReply field
+  }
+
+  var posts = await getPosts(searchObject)
 
   return res.status(200).send(posts)
 })
