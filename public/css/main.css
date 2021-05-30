@@ -306,3 +306,8 @@ nav a.blue {
 .followButton:hover {
   background-color: var(--blueBackground);
 }
+
+.followButton.following {
+  background-color: var(--blue);
+  color: white;
+}
