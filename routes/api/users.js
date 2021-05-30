@@ -40,4 +40,28 @@ router.put('/:userId/follow', async (req, res, next) => {
   return res.status(200).send(req.session.user)
 })
 
+router.get('/:userId/following', async (req, res, next) => {
+  User.findById(req.params.userId)
+    .populate('following')
+    .then((users) => {
+      res.status(200).send(users)
+    })
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(400)
+    })
+})
+
+router.get('/:userId/followers', async (req, res, next) => {
+  User.findById(req.params.userId)
+    .populate('followers')
+    .then((users) => {
+      res.status(200).send(users)
+    })
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(400)
+    })
+})
+
 module.exports = router
