@@ -8,7 +8,17 @@ const Post = require('../../models/PostSchema')
 app.use(bodyParser.urlencoded({ extended: false }))
 
 router.put('/:userId/follow', async (req, res, next) => {
-  res.status(200).send('yello')
+  var userId = req.params.userId
+
+  var user = await User.findById(userId)
+
+  if (user === null) {
+    return res.sendStatus(404)
+  }
+  var isFollowing =
+    user.followers && user.followers.includes(req.session.user._id)
+
+  res.status(200).send(isFollowing)
 })
 
 module.exports = router
