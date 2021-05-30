@@ -16,7 +16,12 @@ block content
                 if profileUser._id !== userLoggedIn._id 
                     a.profileButton(href=`/messages/${profileUser._id}`)
                         i.fas.fa-envelope 
-                    +createFollowButton(profileUser, false) 
+
+                    - var profileUserId = profileUser._id.toString()
+                    - if(userLoggedIn.following && userLoggedIn.following.includes(profileUserId)) //now this is gonna run as javascript code
+                        +createFollowButton(profileUser, true) 
+                    - else 
+                        +createFollowButton(profileUser, false) 
             .userDetailsContainer 
                 span.displayName #{profileUser.firstName} #{profileUser.lastName}
                 span.username @#{profileUser.username}

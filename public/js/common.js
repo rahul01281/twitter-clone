@@ -155,15 +155,19 @@ $(document).on('click', '.followButton', (e) => {
   $.ajax({
     url: `/api/users/${userId}/follow`,
     type: 'PUT',
-    success: (data) => {
-      // button.find('span').text(postData.likes.length || '')
+    success: (data, status, xhr) => {
+      if (xhr.status == 404) {
+        alert('user not found')
+        return
+      }
 
-      // if (postData.likes.includes(userLoggedIn._id)) {
-      //   button.addClass('active')
-      // } else {
-      //   button.removeClass('active')
-      // }
-      console.log(data)
+      if (data.following && data.following.includes(userId)) {
+        button.addClass('following')
+        button.text('Following')
+      } else {
+        button.removeClass('following')
+        button.text('Follow')
+      }
     },
   })
 })
