@@ -17,6 +17,11 @@
   outline: none !important;
 }
 
+/* apply it to the first instance of row found inside the wrapper */
+.wrapper > .row {
+  margin: 0;
+}
+
 button {
   background-color: transparent;
   border: none;
