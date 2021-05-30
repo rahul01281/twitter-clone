@@ -18,7 +18,26 @@ router.put('/:userId/follow', async (req, res, next) => {
   var isFollowing =
     user.followers && user.followers.includes(req.session.user._id)
 
-  res.status(200).send(isFollowing)
+  var option = isFollowing ? '$pull' : '$addToSet'
+
+  //insert the following
+  req.session.user = await User.findByIdAndUpdate(
+    req.session.user._id,
+    { [option]: { following: userId } },
+    { new: true } //new:true will make sure that findByIdAndUpdate will update the value and give back the newly updated document
+  ).catch((error) => {
+    console.log(error)
+    res.sendStatus(400)
+  })
+
+  await User.findByIdAndUpdate(userId, {
+    [option]: { followers: req.session.user._id },
+  }).catch((error) => {
+    console.log(error)
+    res.sendStatus(400)
+  })
+
+  return res.status(200).send(req.session.user)
 })
 
 module.exports = router
