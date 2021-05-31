@@ -91,6 +91,31 @@ $('#replyModal').on('hidden.bs.modal', (e) => {
   $('#originalPostContainer').html('')
 })
 
+// $('#filePhoto').change((e) => {
+//   //fire when file photo is changes
+//   var input = $(e.target)[0]
+
+//   if (input.files && input.files[0]) {
+//     var reader = new FileReader() //allows to read files
+//     reader.onload = () => {
+//       console.log('loaded')
+//     }
+//     reader.readAsDataURL(input.files[0])
+//   }
+// })
+
+$('#filePhoto').change(function () {
+  //fire when file photo is changes
+
+  if (this.files && this.files[0]) {
+    var reader = new FileReader() //allows to read files
+    reader.onload = (e) => {
+      $('#imagePreview').attr('src', e.target.result)
+    }
+    reader.readAsDataURL(this.files[0])
+  }
+})
+
 //this will not work because the buttons are dynamic content and when this executes we don't have our buttons
 // $('.likeButton').click((e) => {
 //   console.log('button clicked')
