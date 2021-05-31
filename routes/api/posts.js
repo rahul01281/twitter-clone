@@ -30,6 +30,20 @@ router.get('/', async (req, res, next) => {
     delete searchObject.isReply //remove the isReply field
   }
 
+  if (searchObject.followingOnly !== undefined) {
+    var followingOnly = searchObject.followingOnly == 'true'
+
+    if (followingOnly) {
+      var objectIds = req.session.user.following //get ids of all the users the person is following
+
+      objectIds.push(req.session.user._id) //see own posts on the news feed
+
+      searchObject.postedBy = { $in: objectIds } // find all posts where posted by is anywhere in the onjectIds array
+    }
+
+    delete searchObject.followingOnly //remove the followingOnly field
+  }
+
   var posts = await getPosts(searchObject)
 
   return res.status(200).send(posts)
