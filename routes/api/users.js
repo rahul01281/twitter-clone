@@ -6,6 +6,8 @@ const User = require('../../models/UserSchema')
 const Post = require('../../models/PostSchema')
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
+const path = require('path')
+const fs = require('fs')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -75,7 +77,17 @@ router.post(
       return res.sendStatus(400)
     }
 
-    res.sendStatus(200)
+    var filePath = `/uploads/images/${req.file.filename}.png`
+    var tempPath = req.file.path //this is the location where the image currently is
+    var targetPath = path.join(__dirname, `../../${filePath}`) //put this file here
+
+    fs.rename(tempPath, targetPath, (error) => {
+      if (error != null) {
+        console.log(error)
+        return res.sendStatus(400)
+      }
+      res.sendStatus(200)
+    })
   }
 )
 
