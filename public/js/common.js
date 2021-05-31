@@ -1,3 +1,6 @@
+//Global Variables
+var cropper
+
 //handling the post textarea and submit button
 $('#postTextarea, #replyTextarea').keyup((e) => {
   var textbox = $(e.target)
@@ -110,7 +113,17 @@ $('#filePhoto').change(function () {
   if (this.files && this.files[0]) {
     var reader = new FileReader() //allows to read files
     reader.onload = (e) => {
-      $('#imagePreview').attr('src', e.target.result)
+      //load the image into the container to display it
+      var image = document.getElementById('imagePreview')
+
+      image.src = e.target.result
+      // $('#imagePreview').attr('src', e.target.result)
+
+      if (cropper !== undefined) {
+        cropper.destroy()
+      }
+
+      cropper = new Cropper(image, { aspectRatio: 1 / 1, background: false })
     }
     reader.readAsDataURL(this.files[0])
   }
