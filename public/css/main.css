@@ -415,3 +415,9 @@ nav a.blue {
   display: block;
   max-width: 100%;
 }
+
+#coverPreview {
+  width: 100%;
+  display: block;
+  max-width: 100%;
+}

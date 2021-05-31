@@ -129,6 +129,28 @@ $('#filePhoto').change(function () {
   }
 })
 
+$('#coverPhoto').change(function () {
+  //fire when file photo is changes
+
+  if (this.files && this.files[0]) {
+    var reader = new FileReader() //allows to read files
+    reader.onload = (e) => {
+      //load the image into the container to display it
+      var image = document.getElementById('coverPreview')
+
+      image.src = e.target.result
+      // $('#imagePreview').attr('src', e.target.result)
+
+      if (cropper !== undefined) {
+        cropper.destroy()
+      }
+
+      cropper = new Cropper(image, { aspectRatio: 16 / 9, background: false })
+    }
+    reader.readAsDataURL(this.files[0])
+  }
+})
+
 $('#imageUploadButton').click(() => {
   var canvas = cropper.getCroppedCanvas()
 
