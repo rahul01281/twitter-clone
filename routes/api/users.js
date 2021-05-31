@@ -81,12 +81,18 @@ router.post(
     var tempPath = req.file.path //this is the location where the image currently is
     var targetPath = path.join(__dirname, `../../${filePath}`) //put this file here
 
-    fs.rename(tempPath, targetPath, (error) => {
+    fs.rename(tempPath, targetPath, async (error) => {
       if (error != null) {
         console.log(error)
         return res.sendStatus(400)
       }
-      res.sendStatus(200)
+
+      req.session.user = await User.findByIdAndUpdate(
+        req.session.user._id,
+        { profilePic: filePath },
+        { new: true }
+      )
+      res.sendStatus(204)
     })
   }
 )
