@@ -365,3 +365,7 @@ nav a.blue {
   color: var(--blue);
   background-color: var(--blueBackground);
 }
+
+.noResults {
+  padding: var(--spacing);
+}
