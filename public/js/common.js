@@ -142,7 +142,13 @@ $('#imageUploadButton').click(() => {
     var formData = new FormData()
     formData.append('croppedImage', blob)
 
-    console.log(formData)
+    $.ajax({
+      url: '/api/users/profilePicture',
+      type: 'POST',
+      processData: false, //forces jquery not to convert formData to a string
+      contentType: false, //contentType is used for forms that are submitting files
+      success: (data, status, xhr) => location.reload(),
+    })
   })
 })
 
