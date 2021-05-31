@@ -97,4 +97,33 @@ router.post(
   }
 )
 
+router.post(
+  '/coverPhoto',
+  upload.single('croppedImage'),
+  async (req, res, next) => {
+    if (!req.file) {
+      console.log('no file uploaded with ajax call')
+      return res.sendStatus(400)
+    }
+
+    var filePath = `/uploads/images/${req.file.filename}.png`
+    var tempPath = req.file.path //this is the location where the image currently is
+    var targetPath = path.join(__dirname, `../../${filePath}`) //put this file here
+
+    fs.rename(tempPath, targetPath, async (error) => {
+      if (error != null) {
+        console.log(error)
+        return res.sendStatus(400)
+      }
+
+      req.session.user = await User.findByIdAndUpdate(
+        req.session.user._id,
+        { coverPhoto: filePath },
+        { new: true }
+      )
+      res.sendStatus(204)
+    })
+  }
+)
+
 module.exports = router

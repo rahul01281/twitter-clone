@@ -175,6 +175,30 @@ $('#imageUploadButton').click(() => {
   })
 })
 
+$('#coverPhotoUploadButton').click(() => {
+  var canvas = cropper.getCroppedCanvas()
+
+  if (canvas == null) {
+    alert('could not upload image. Make sure it is an image file')
+    return
+  }
+
+  //Blob is used to store images and videos and quite useful in transferring this data to between services
+  canvas.toBlob((blob) => {
+    var formData = new FormData()
+    formData.append('croppedImage', blob)
+
+    $.ajax({
+      url: '/api/users/coverPhoto',
+      type: 'POST',
+      data: formData,
+      processData: false, //forces jquery not to convert formData to a string
+      contentType: false, //contentType is used for forms that are submitting files
+      success: (data, status, xhr) => location.reload(),
+    })
+  })
+})
+
 //this will not work because the buttons are dynamic content and when this executes we don't have our buttons
 // $('.likeButton').click((e) => {
 //   console.log('button clicked')
