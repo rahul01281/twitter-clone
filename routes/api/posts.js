@@ -34,7 +34,14 @@ router.get('/', async (req, res, next) => {
     var followingOnly = searchObject.followingOnly == 'true'
 
     if (followingOnly) {
-      var objectIds = req.session.user.following //get ids of all the users the person is following
+      var objectIds = [] //get ids of all the users the person is following
+
+      if (!req.session.user.following) {
+        req.session.user.following = []
+      }
+      req.session.user.following.forEach((user) => {
+        objectIds.push(user)
+      })
 
       objectIds.push(req.session.user._id) //see own posts on the news feed
 
