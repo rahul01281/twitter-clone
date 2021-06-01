@@ -12,6 +12,14 @@ function loadPosts() {
       outputPosts(posts, $('.postsContainer'))
     }
   )
+
+  $.get(
+    '/api/posts',
+    { postedBy: profileUserId, pinned: true },
+    (posts, status, xhr) => {
+      outputPinnedPost(posts, $('.pinnedPostContainer'))
+    }
+  )
 }
 
 function loadReplies() {
@@ -23,4 +31,18 @@ function loadReplies() {
       outputPosts(posts, $('.postsContainer'))
     }
   )
+}
+
+function outputPinnedPost(posts, container) {
+  if (posts.length == 0) {
+    container.hide()
+    return
+  }
+
+  container.html('')
+
+  posts.forEach((post) => {
+    var html = createPostHtml(post)
+    container.append(html)
+  })
 }
