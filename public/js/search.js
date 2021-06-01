@@ -22,7 +22,7 @@ function search(searchTerm, searchType) {
 
   $.get(url, { search: searchTerm }, (data, status, xhr) => {
     if (searchType == 'users') {
-      console.log(data)
+      outputUsers(data, $('.resultsContainer'))
     } else {
       outputPosts(data, $('.resultsContainer'))
     }
