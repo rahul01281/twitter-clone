@@ -11,6 +11,30 @@ const fs = require('fs')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
+router.get('/', async (req, res, next) => {
+  var searchObject = req.query
+
+  if (req.query.search !== undefined) {
+    searchObject = {
+      $or: [
+        //$or is a mongodb operator which is gonna let any of these conditions is gonna met
+        { firstName: { $regex: req.query.search, $options: 'i' } },
+        { lastName: { $regex: req.query.search, $options: 'i' } },
+        { username: { $regex: req.query.search, $options: 'i' } },
+      ],
+    }
+  }
+
+  User.find(searchObject)
+    .then((users) => {
+      res.status(200).send(users)
+    })
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(400)
+    })
+})
+
 router.put('/:userId/follow', async (req, res, next) => {
   var userId = req.params.userId
 
