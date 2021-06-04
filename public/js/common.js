@@ -558,7 +558,11 @@ function outputUsers(data, container) {
 function outputSelectableUsers(data, container) {
   container.html('')
   data.forEach((user) => {
-    if (user._id == userLoggedIn._id) {
+    //not display the logged in user or the user who is already selected. checking if this user already exists on array.
+    if (
+      user._id == userLoggedIn._id ||
+      selectedUsers.some((u) => u._id == user._id)
+    ) {
       return
     }
 
