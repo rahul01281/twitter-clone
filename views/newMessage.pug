@@ -3,12 +3,12 @@ extends layouts/main-layout.pug
 block content  
 
     .chatPageContainer 
-        .chatTitlebar 
+        .chatTitleBar 
             label(for="userSearchTextBox") To: 
             #selectedUsers 
             input#userSearchTextBox(type="text", placeholder="Type the name of the person")
         .resultsContainer 
-        button#createChat(disabled) Create Chat 
+        button#createChatButton(disabled) Create Chat 
 
 block scripts
     script(src="/js/inboxPage.js") 
