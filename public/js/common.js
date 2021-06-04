@@ -1,6 +1,7 @@
 //Global Variables
 var cropper
 var timer
+var selectedUsers = []
 
 //handling the post textarea and submit button
 $('#postTextarea, #replyTextarea').keyup((e) => {
@@ -562,7 +563,10 @@ function outputSelectableUsers(data, container) {
     }
 
     var html = createUserHtml(user, true)
-    container.append(html)
+    var element = $(html)
+
+    element.click(() => userSelected(user))
+    container.append(element)
   })
 
   if (data.length == 0) {
@@ -601,4 +605,11 @@ function searchUsers(searchTerm) {
   $.get('/api/users', { search: searchTerm }, (data, status, xhr) => {
     outputSelectableUsers(data, $('.resultsContainer'))
   })
+}
+
+function userSelected(user) {
+  selectedUsers.push(user)
+  $('#userSearchTextBox').val('').focus() //clear the value of the text box
+  $('.resultsContainer').html('')
+  $('#createChatButton').prop('disabled', false)
 }
