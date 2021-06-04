@@ -258,8 +258,11 @@ $('#userSearchTextBox').keydown((e) => {
   var searchType = textbox.data().search
 
   //if textbox is empty and they press the delete button
-  if (value == '' && e.keycode == 8) {
+  if (value == '' && (e.keyCode == 8 || e.which == 8)) {
     //remove user from selection
+    selectedUsers.pop()
+    updateSelectedUsersHtml()
+    $('.resultsContainer').html('')
     return
   }
 
@@ -566,7 +569,7 @@ function outputSelectableUsers(data, container) {
       return
     }
 
-    var html = createUserHtml(user, true)
+    var html = createUserHtml(user, false)
     var element = $(html)
 
     element.click(() => userSelected(user))
