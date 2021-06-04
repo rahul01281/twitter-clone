@@ -554,6 +554,22 @@ function outputUsers(data, container) {
   }
 }
 
+function outputSelectableUsers(data, container) {
+  container.html('')
+  data.forEach((user) => {
+    if (user._id == userLoggedIn._id) {
+      return
+    }
+
+    var html = createUserHtml(user, true)
+    container.append(html)
+  })
+
+  if (data.length == 0) {
+    container.append("<span class='noResults'>No results found.</span>")
+  }
+}
+
 function createUserHtml(userData, showFollowButton) {
   var name = userData.firstName + ' ' + userData.lastName
   var isFollowing =
@@ -582,5 +598,7 @@ function createUserHtml(userData, showFollowButton) {
 }
 
 function searchUsers(searchTerm) {
-  console.log('hi')
+  $.get('/api/users', { search: searchTerm }, (data, status, xhr) => {
+    outputSelectableUsers(data, $('.resultsContainer'))
+  })
 }
