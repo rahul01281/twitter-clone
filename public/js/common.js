@@ -251,6 +251,17 @@ $('#coverPhotoUploadButton').click(() => {
   })
 })
 
+$('#createChatButton').click(() => {
+  var data = JSON.stringify(selectedUsers)
+
+  $.post('/api/chats', { users: data }, (chat, status, xhr) => {
+    if (!chat || !chat._id) {
+      return alert('invalid response from server')
+    }
+    window.location.href = `/messages/${chat._id}`
+  })
+})
+
 $('#userSearchTextBox').keydown((e) => {
   clearTimeout(timer)
   var textbox = $(event.target)
