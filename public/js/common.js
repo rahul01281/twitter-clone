@@ -1,5 +1,6 @@
 //Global Variables
 var cropper
+var timer
 
 //handling the post textarea and submit button
 $('#postTextarea, #replyTextarea').keyup((e) => {
@@ -247,6 +248,29 @@ $('#coverPhotoUploadButton').click(() => {
       success: (data, status, xhr) => location.reload(),
     })
   })
+})
+
+$('#userSearchTextBox').keydown((e) => {
+  clearTimeout(timer)
+  var textbox = $(event.target)
+  var value = textbox.val()
+  var searchType = textbox.data().search
+
+  //if textbox is empty and they press the delete button
+  if (value == '' && e.keycode == 8) {
+    //remove user from selection
+    return
+  }
+
+  timer = setTimeout(() => {
+    value = textbox.val().trim()
+
+    if (value == '') {
+      $('.resultsContainer').html('')
+    } else {
+      searchUsers(value)
+    }
+  }, 1000) //starts a timer and executes the code one timme after a certain duration
 })
 
 //this will not work because the buttons are dynamic content and when this executes we don't have our buttons
@@ -555,4 +579,8 @@ function createUserHtml(userData, showFollowButton) {
                 </div>
                 ${followButton}
             </div>`
+}
+
+function searchUsers(searchTerm) {
+  console.log('hi')
 }
