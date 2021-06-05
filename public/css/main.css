@@ -676,3 +676,7 @@ nav a.blue {
 .chatImagesContainer .userCount {
   margin-left: -10px;
 }
+
+#chatNametextbox {
+  width: 100%;
+}
