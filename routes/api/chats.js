@@ -47,4 +47,14 @@ router.get('/', async (req, res, next) => {
     })
 })
 
+router.put('/:chatId', async (req, res, next) => {
+  //find all the chats the logged in user is a part of
+  Chat.findByIdAndUpdate(req.params.chatId, req.body)
+    .then(() => res.sendStatus(204))
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(400)
+    })
+})
+
 module.exports = router
