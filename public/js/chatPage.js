@@ -24,10 +24,20 @@ $('.sendMessageButton').click(() => {
 
 $('.inputTextbox').keydown((e) => {
   if (e.which === 13) {
+    messageSubmitted()
     return false
   }
 })
 
 function messageSubmitted() {
-  console.log('submitted')
+  var content = $('.inputTextbox').val().trim()
+
+  if (content != '') {
+    sendMessage(content)
+    $('.inputTextbox').val('')
+  }
+}
+
+function sendMessage(content) {
+  console.log(content)
 }
