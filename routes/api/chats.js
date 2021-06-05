@@ -35,4 +35,14 @@ router.post('/', async (req, res, next) => {
     })
 })
 
+router.get('/', async (req, res, next) => {
+  //find all the chats the logged in user is a part of
+  Chat.find({ users: { $elemMatch: { $eq: req.session.user._id } } })
+    .then((chats) => res.status(200).send(chats))
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(400)
+    })
+})
+
 module.exports = router
