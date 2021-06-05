@@ -645,3 +645,18 @@ nav a.blue {
   overflow-y: auto;
   padding: var(--spacing);
 }
+
+.chatImagesContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  height: 100%;
+  margin-right: var(--spacing);
+}
+
+.chatImagesContainer img {
+  width: 40px;
+  height: 40px;
+  border: 2px solid white;
+  border-radius: 50%;
+  margin-left: -10px;
+}
