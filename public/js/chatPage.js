@@ -43,7 +43,31 @@ function sendMessage(content) {
     '/api/messages',
     { content: content, chatId: chatId },
     (message, status, xhr) => {
-      console.log(message)
+      addChatMessageHtml(message)
     }
   )
+}
+
+function addChatMessageHtml(message) {
+  if (!message || !message._id) {
+    alert('message is not valid')
+    return
+  }
+
+  var messageDiv = createMessageHtml(message)
+
+  $('.chatMessages').append(messageDiv)
+}
+
+function createMessageHtml(message) {
+  var isMine = message.sender._id == userLoggedIn._id
+  var liClassNamme = isMine ? 'mine' : 'theirs'
+
+  return `<li class='message ${liClassNamme}'>
+                <div class='messageContainer'>
+                    <span class='messageBody'>
+                        ${message.content}
+                    </span>
+                </div>
+            </li>`
 }
