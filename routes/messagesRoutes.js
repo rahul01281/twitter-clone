@@ -52,6 +52,7 @@ router.get('/:chatId', async (req, res, next) => {
     var userFound = await User.findById(chatId)
     if (userFound != null) {
       //get chat using user id
+      chat = await getChatByUserId(userFound._id, userId)
     }
   }
 
@@ -64,5 +65,32 @@ router.get('/:chatId', async (req, res, next) => {
 
   res.status(200).render('chatPage', payload)
 })
+
+function getChatByUserId(userLoggedInId, otherUserId) {
+  //we are using findOneAndUpdate because if this chat does not exist, we will create it
+  return Chat.findOneAndUpdate(
+    {
+      isGroupChat: false,
+      users: {
+        $size: 2,
+        // checking if all of these below conditions are met
+        $all: [
+          { $elemMatch: { $eq: mongoose.Types.ObjectId(userLoggedInId) } },
+          { $elemMatch: { $eq: mongoose.Types.ObjectId(otherUserId) } },
+        ],
+      },
+    },
+    {
+      //if we don't find anything with the query above
+      $setOnInsert: {
+        users: [userLoggedInId, otherUserId],
+      },
+    },
+    {
+      new: true, //return the newly update document
+      upsert: true, //if you don't find it, create it
+    }
+  ).populate('users')
+}
 
 module.exports = router
