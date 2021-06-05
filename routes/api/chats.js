@@ -47,6 +47,20 @@ router.get('/', async (req, res, next) => {
     })
 })
 
+router.get('/:chatId', async (req, res, next) => {
+  //find all the chats the logged in user is a part of
+  Chat.findOne({
+    _id: req.params.chatId,
+    users: { $elemMatch: { $eq: req.session.user._id } },
+  })
+    .populate('users')
+    .then((chat) => res.status(200).send(chat))
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(400)
+    })
+})
+
 router.put('/:chatId', async (req, res, next) => {
   //find all the chats the logged in user is a part of
   Chat.findByIdAndUpdate(req.params.chatId, req.body)
