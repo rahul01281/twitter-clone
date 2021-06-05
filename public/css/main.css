@@ -13,13 +13,28 @@
   --greenBackground: rgba(23, 191, 99, 0.1);
 }
 
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  background-color: white;
+  font-weight: 300;
+}
+
 * {
   outline: none !important;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 /* apply it to the first instance of row found inside the wrapper */
 .wrapper > .row {
   margin: 0;
+  height: 100%;
 }
 
 button {
