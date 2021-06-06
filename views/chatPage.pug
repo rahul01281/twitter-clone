@@ -13,7 +13,9 @@ block content
                 span#chatName(data-toggle="modal", data-target="#chatNameModal") 
 
             .mainContentContainer 
-                .chatContainer 
+                .loadingSpinnerContainer 
+                    img(src="/images/loader.gif", alt="loading spinner")
+                .chatContainer(style="visibility: hidden")
                     ul.chatMessages
 
                     .footer 

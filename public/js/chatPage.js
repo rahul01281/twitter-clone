@@ -16,7 +16,10 @@ $(document).ready(() => {
 
     var messagesHtml = messages.join('') //join every item in the array into a big string
     addMessagesHtmlToPage(messagesHtml)
-    scrollToBottom(false)
+    scrollToBottom(true)
+
+    $('.loadingSpinnerContainer').remove()
+    $('.chatContainer').css('visibility', 'visible')
   })
 })
 
