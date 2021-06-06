@@ -5,10 +5,13 @@ $(document).ready(() => {
 
   $.get(`/api/chats/${chatId}/messages`, (data) => {
     var messages = []
+    var lastSenderId = ''
 
-    data.forEach((message) => {
-      var html = createMessageHtml(message)
+    data.forEach((message, index) => {
+      var html = createMessageHtml(message, data[index + 1], lastSenderId)
       messages.push(html)
+
+      lastSenderId = message.sender._id
     })
 
     var messagesHtml = messages.join('') //join every item in the array into a big string
@@ -78,14 +81,32 @@ function addChatMessageHtml(message) {
     return
   }
 
-  var messageDiv = createMessageHtml(message)
+  var messageDiv = createMessageHtml(message, null, '')
 
   addMessagesHtmlToPage(messageDiv)
 }
 
-function createMessageHtml(message) {
+function createMessageHtml(message, nextMessage, lastSenderId) {
+  var sender = message.sender
+  var senderName = `${sender.firstName} ${sender.lastName}`
+
+  var currentSenderId = sender._id
+
+  var nextSenderId = nextMessage != null ? nextMessage.sender._id : ''
+
+  var isFirst = lastSenderId != currentSenderId
+  var isLast = nextSenderId != currentSenderId
+
   var isMine = message.sender._id == userLoggedIn._id
   var liClassNamme = isMine ? 'mine' : 'theirs'
+
+  if (isFirst) {
+    liClassNamme += ' first'
+  }
+
+  if (isLast) {
+    liClassNamme += ' last'
+  }
 
   return `<li class='message ${liClassNamme}'>
                 <div class='messageContainer'>
