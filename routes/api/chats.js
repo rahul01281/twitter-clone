@@ -4,6 +4,7 @@ const router = express.Router()
 const bodyParser = require('body-parser')
 const User = require('../../models/UserSchema')
 const Chat = require('../../models/ChatSchema')
+const Message = require('../../models/MessageSchema')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -58,6 +59,17 @@ router.get('/:chatId', async (req, res, next) => {
     users: { $elemMatch: { $eq: req.session.user._id } },
   })
     .populate('users')
+    .then((chat) => res.status(200).send(chat))
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(400)
+    })
+})
+
+router.get('/:chatId/messages', async (req, res, next) => {
+  //find all the chats the logged in user is a part of
+  Message.find({ chat: req.params.chatId })
+    .populate('sender')
     .then((chat) => res.status(200).send(chat))
     .catch((error) => {
       console.log(error)
