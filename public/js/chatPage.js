@@ -1,7 +1,7 @@
 $(document).ready(() => {
   socket.emit('join room', chatId) //it will emit an event to the server called "join room" and will pass in the chatId
   socket.on('typing', () => {
-    console.log('user is typing')
+    $('.typingDots').show()
   })
 
   $.get(`/api/chats/${chatId}`, (data) => {
