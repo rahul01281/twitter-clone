@@ -67,5 +67,9 @@ app.get('/', middleware.requireLogin, (req, res, next) => {
 })
 
 io.on('connection', (socket) => {
-  console.log('connected to socket.io')
+  // will run when something connects to socket io and then socket io will pass this socket
+  socket.on('setup', (userData) => {
+    socket.join(userData._id) //when we get this setup event, it's going to join this room
+    socket.emit('connected')
+  })
 })
