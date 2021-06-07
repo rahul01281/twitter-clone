@@ -1,4 +1,6 @@
 $(document).ready(() => {
+  socket.emit('join room', chatId) //it will emit an event to the server called "join room" and will pass in the chatId
+
   $.get(`/api/chats/${chatId}`, (data) => {
     $('#chatName').text(getChatName(data))
   })

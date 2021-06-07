@@ -72,4 +72,8 @@ io.on('connection', (socket) => {
     socket.join(userData._id) //when we get this setup event, it's going to join this room
     socket.emit('connected')
   })
+
+  socket.on('join room', (room) => {
+    socket.join(room)
+  })
 })
