@@ -112,6 +112,10 @@ function sendMessage(content) {
       }
 
       addChatMessageHtml(message)
+
+      if (connected) {
+        socket.emit('new message', message)
+      }
     }
   )
 }

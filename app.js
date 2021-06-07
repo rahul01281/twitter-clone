@@ -85,4 +85,16 @@ io.on('connection', (socket) => {
   socket.on('stop typing', (room) => {
     socket.in(room).emit('stop typing')
   })
+
+  socket.on('new message', (newMessage) => {
+    var message = newMessage.chat
+
+    if (!chat.users) return console.log('chat.users not defined')
+
+    //loop over every user and ignore if we are the person that sent the message but for everyone else we will send a notification in their own personal room telling them that there's a new message
+    chat.users.forEach((user) => {
+      if (user._id == newMessage.sender._id) return
+      socket.in(user._id).emit('message received', newMessage)
+    })
+  })
 })
