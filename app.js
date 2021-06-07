@@ -76,4 +76,9 @@ io.on('connection', (socket) => {
   socket.on('join room', (room) => {
     socket.join(room)
   })
+
+  //it will then receive it on the server and then inside the room we specified it will emit the typing indication
+  socket.on('typing', (room) => {
+    socket.in(room).emit('typing')
+  })
 })

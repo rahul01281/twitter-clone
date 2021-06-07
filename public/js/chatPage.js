@@ -1,5 +1,8 @@
 $(document).ready(() => {
   socket.emit('join room', chatId) //it will emit an event to the server called "join room" and will pass in the chatId
+  socket.on('typing', () => {
+    console.log('user is typing')
+  })
 
   $.get(`/api/chats/${chatId}`, (data) => {
     $('#chatName').text(getChatName(data))
@@ -44,11 +47,17 @@ $('.sendMessageButton').click(() => {
 })
 
 $('.inputTextbox').keydown((e) => {
+  updateTyping()
+
   if (e.which === 13) {
     messageSubmitted()
     return false
   }
 })
+
+function updateTyping() {
+  socket.emit('typing', chatId) //when we're typing, it will send a notification that we're typing (cont. on app.js line 80)
+}
 
 function addMessagesHtmlToPage(html) {
   $('.chatMessages').append(html)
