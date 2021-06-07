@@ -6,3 +6,7 @@ socket.emit('setup', userLoggedIn) //what emit does is that it broadcasts the fa
 socket.on('connected', () => {
   connected = true
 })
+
+socket.on('message received', (newMessage) => {
+  messageReceived(newMessage)
+})
