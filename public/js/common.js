@@ -677,3 +677,18 @@ function messageReceived(newMessage) {
     addChatMessageHtml(newMessage)
   }
 }
+
+function markNotificationOpen(notificationId = null, callback = null) {
+  if (callback == null) callback = () => location.reload() //if user doesnot specify a callback
+
+  var url =
+    notificationId != null
+      ? `/api/notifications/${notificationId}/open`
+      : '/api/notifications/open'
+
+  $.ajax({
+    url: url,
+    type: 'PUT',
+    success: () => callback(),
+  })
+}
