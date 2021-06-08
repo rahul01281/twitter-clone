@@ -292,6 +292,17 @@ $('#userSearchTextBox').keydown((e) => {
   }, 1000) //starts a timer and executes the code one timme after a certain duration
 })
 
+$(document).on('click', '.notification.active', (e) => {
+  var container = $(e.target)
+  var notificationId = container.data().id
+
+  var href = container.attr('href')
+  e.preventDefault() //it prevents the normal behavior of the element from happening
+
+  var callback = () => (window.location = href)
+  markNotificationOpen(notificationId, callback)
+})
+
 //this will not work because the buttons are dynamic content and when this executes we don't have our buttons
 // $('.likeButton').click((e) => {
 //   console.log('button clicked')

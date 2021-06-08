@@ -804,3 +804,7 @@ nav a.blue {
 .resultListItem.active {
   background-color: var(--blueBackground);
 }
+
+.resultListItem.notification * {
+  pointer-events: none;
+}
