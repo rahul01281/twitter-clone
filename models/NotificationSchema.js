@@ -13,5 +13,25 @@ const NotificationSchema = new Schema(
   { timestamps: true }
 )
 
+//declared an insertNotification function on the notification schema and we can call this from any other page
+NotificationSchema.statics.insertNotification = async (
+  userTo,
+  userFrom,
+  notificationType,
+  entityId
+) => {
+  var data = {
+    userTo: userTo,
+    userFrom: userFrom,
+    notificationType: notificationType,
+    entityId: entityId,
+  }
+
+  await Notification.deleteOne(data).catch((error) => console.log(error))
+  return Notification.create(data).catch((error) => console.log(error))
+}
+
+//check if the notifications exists of the same type and delete it if it exists
+
 var Notification = mongoose.model('Notification', NotificationSchema)
 module.exports = Notification
