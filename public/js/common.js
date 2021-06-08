@@ -5,6 +5,7 @@ var selectedUsers = []
 
 $(document).ready(() => {
   refreshMessagesBadge()
+  refreshNotificationsBadge()
 })
 
 //handling the post textarea and submit button
@@ -691,6 +692,8 @@ function messageReceived(newMessage) {
   } else {
     addChatMessageHtml(newMessage)
   }
+
+  refreshMessagesBadge()
 }
 
 function markNotificationOpen(notificationId = null, callback = null) {
@@ -716,6 +719,18 @@ function refreshMessagesBadge() {
       $('#messagesBadge').text(numResults).addClass('active')
     } else {
       $('#messagesBadge').text('').removeClass('active')
+    }
+  })
+}
+
+function refreshNotificationsBadge() {
+  $.get('/api/notifications', { unreadOnly: true }, (data) => {
+    var numResults = data.length
+
+    if (numResults > 0) {
+      $('#notificationsBadge').text(numResults).addClass('active')
+    } else {
+      $('#notificationsBadge').text('').removeClass('active')
     }
   })
 }
