@@ -10,7 +10,20 @@ const Notification = require('../../models/NotificationSchema')
 app.use(bodyParser.urlencoded({ extended: false }))
 
 router.get('/', async (req, res, next) => {
-  res.status(200).send('it worked')
+  Notification.find({
+    userTo: req.session.user._id,
+    notificationType: { $ne: 'newMessage' },
+  })
+    .populate('userTo')
+    .populate('userFrom')
+    .sort({ createdAt: -1 })
+    .then((notifications) => {
+      res.status(200).send(notifications)
+    })
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(400)
+    })
 })
 
 module.exports = router
