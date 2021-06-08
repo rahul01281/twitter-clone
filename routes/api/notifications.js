@@ -37,4 +37,16 @@ router.put('/:id/open', async (req, res, next) => {
     })
 })
 
+router.put('/open', async (req, res, next) => {
+  //this should mark all the notifications ad true which is of the user's
+  Notification.updateMany({ userTo: req.session.user._id }, { opened: true })
+    .then(() => {
+      res.sendStatus(200)
+    })
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(400)
+    })
+})
+
 module.exports = router

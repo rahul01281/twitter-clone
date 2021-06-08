@@ -4,6 +4,10 @@ $(document).ready(() => {
   })
 })
 
+$('#markNotificationsread').click(() => {
+  markNotificationOpen()
+})
+
 function outputNotificationsList(notifications, container) {
   notifications.forEach((notification) => {
     var html = createNotificationHtml(notification)

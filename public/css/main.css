@@ -808,3 +808,8 @@ nav a.blue {
 .resultListItem.notification * {
   pointer-events: none;
 }
+
+#markNotificationsread {
+  cursor: pointer;
+  color: var(--blue);
+}
