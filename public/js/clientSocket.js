@@ -12,7 +12,9 @@ socket.on('message received', (newMessage) => {
 })
 
 socket.on('notification received', (newNotification) => {
-  console.log('notification received')
+  $.get('/api/notifications/latest', (notificationData) => {
+    refreshNotificationsBadge()
+  })
 })
 
 function emitNotification(userId) {
