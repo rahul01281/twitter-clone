@@ -3,6 +3,10 @@ var cropper
 var timer
 var selectedUsers = []
 
+$(document).ready(() => {
+  refreshMessagesBadge()
+})
+
 //handling the post textarea and submit button
 $('#postTextarea, #replyTextarea').keyup((e) => {
   var textbox = $(e.target)
@@ -701,5 +705,11 @@ function markNotificationOpen(notificationId = null, callback = null) {
     url: url,
     type: 'PUT',
     success: () => callback(),
+  })
+}
+
+function refreshMessagesBadge() {
+  $.get('/api/chats', { unreadOnly: true }, (data) => {
+    console.log(data.length)
   })
 }
