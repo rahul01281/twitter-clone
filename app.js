@@ -36,6 +36,7 @@ const profileRoutes = require('./routes/profileRoutes')
 const uploadRoutes = require('./routes/uploadRoutes')
 const searchRoutes = require('./routes/searchRoutes')
 const messagesRoutes = require('./routes/messagesRoutes')
+const notificationsRoutes = require('./routes/notificationRoutes')
 
 //API Routes
 const postsApiRoutes = require('./routes/api/posts')
@@ -51,6 +52,7 @@ app.use('/profile', middleware.requireLogin, profileRoutes)
 app.use('/uploads', middleware.requireLogin, uploadRoutes)
 app.use('/search', middleware.requireLogin, searchRoutes)
 app.use('/messages', middleware.requireLogin, messagesRoutes)
+app.use('/notifications', middleware.requireLogin, notificationsRoutes)
 
 app.use('/api/posts', postsApiRoutes)
 app.use('/api/users', usersApiRoutes)
