@@ -800,3 +800,7 @@ nav a.blue {
   padding-bottom: 0;
   display: none;
 }
+
+.resultListItem.active {
+  background-color: var(--blueBackground);
+}
