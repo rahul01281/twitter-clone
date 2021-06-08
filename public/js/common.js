@@ -50,6 +50,7 @@ $('#submitPostButton, #submitReplyButton').click((e) => {
     //the function which is called when the request to the url has returned
 
     if (postData.replyTo) {
+      emitNotification(postData.replyTo.postedBy)
       location.reload()
     } else {
       var html = createPostHtml(postData)
@@ -328,6 +329,7 @@ $(document).on('click', '.likeButton', (e) => {
 
       if (postData.likes.includes(userLoggedIn._id)) {
         button.addClass('active')
+        emitNotification(postData.postedBy)
       } else {
         button.removeClass('active')
       }
@@ -349,6 +351,7 @@ $(document).on('click', '.retweetButton', (e) => {
 
       if (postData.retweetUsers.includes(userLoggedIn._id)) {
         button.addClass('active')
+        emitNotification(postData.postedBy)
       } else {
         button.removeClass('active')
       }
@@ -382,6 +385,7 @@ $(document).on('click', '.followButton', (e) => {
       if (data.following && data.following.includes(userId)) {
         button.addClass('following')
         button.text('Following')
+        emitNotification(userId)
       } else {
         button.removeClass('following')
         button.text('Follow')
