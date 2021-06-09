@@ -691,7 +691,7 @@ function getOtherChatUsers(users) {
 }
 
 function messageReceived(newMessage) {
-  if ($('.chatContainer').length == 0) {
+  if ($(`[data-room="${newMessage.chat._id}"`).length == 0) {
     //this means they are not on the page, so show popup notification
     showMessagePopup(newMessage)
   } else {
