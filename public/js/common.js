@@ -835,7 +835,14 @@ function createChatHtml(chatData) {
   var image = getChatImageElement(chatData)
   var latestMessage = getLatestMessage(chatData.latestMessage)
 
-  return `<a href='/messages/${chatData._id}' class='resultListItem'>
+  // !chatdata.latestMessage this means it is a new chat so we will keep it as unread
+  var activeClass =
+    !chatData.latestMessage ||
+    chatData.latestMessage.readBy.includes(userLoggedIn._id)
+      ? ''
+      : 'active'
+
+  return `<a href='/messages/${chatData._id}' class='resultListItem ${activeClass}'>
                 ${image}
                 <div class='resultsDetailsContainer ellipsis'>
                     <span class='heading ellipsis'>${chatName}</span>
